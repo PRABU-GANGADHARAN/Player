@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>MusicOne</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+
+
+ <div class="audio-player" id="song"></div>
+ <center>
+   <a href="upload_song.html">Click here to upload</a>
+ </center>
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
+  import { getDatabase, set, ref ,push, child, onValue} from "https://www.gstatic.com/firebasejs/9.6.6/firebase-database.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA1qSGK_kvd-TViEl_vnqC1kVNlzcNgLd8",
+    authDomain: "custom-zone-271515.firebaseapp.com",
+    databaseURL: "https://custom-zone-271515-default-rtdb.firebaseio.com",
+    projectId: "custom-zone-271515",
+    storageBucket: "custom-zone-271515.appspot.com",
+    messagingSenderId: "504853211033",
+    appId: "1:504853211033:web:5fb37524912ebad58dd508"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  
+  // Get a reference to the database service
+  const database = getDatabase(app);
+
+  // write data
+
+  // read data
+    const dbRef = ref(database, 'users/');
+    onValue(dbRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+      const childKey = childSnapshot.key;
+      const childData = childSnapshot.val();
+      // ...
+      var song_name = document.createElement('p');
+      var movie_name = document.createElement('p');
+      var song_text = document.createTextNode(childData.firstName);
+      var movie_text = document.createTextNode(childData.lastName);
+      song_name.appendChild(song_text);
+      movie_name.appendChild(movie_text);
+      document.getElementById('song').appendChild(song_name);
+      document.getElementById('song').appendChild(movie_name);
+      var sound =document.createElement('audio');
+      sound.id = 'audio-player'; 
+      sound.controls = 'controls'; 
+      sound.src = childData.email;
+      sound.type = 'audio/mpeg'; 
+      document.getElementById('song').appendChild(sound);
+      //var line =document.createElement('br');
+      //document.getElementById('song').appendChild(line);
+      
+      });
+    }, {
+      
+    });
+
+
+</script>
