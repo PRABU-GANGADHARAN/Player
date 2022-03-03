@@ -65,8 +65,8 @@
       // ...
       var song_name = document.createElement('p');
       var movie_name = document.createElement('p');
-      var song_text = document.createTextNode(childData.firstName);
-      var movie_text = document.createTextNode(childData.lastName);
+      var song_text = document.createTextNode(childData.SongName);
+      var movie_text = document.createTextNode(childData.MovieName);
       song_name.appendChild(song_text);
       movie_name.appendChild(movie_text);
       document.getElementById('song').appendChild(song_name);
@@ -74,7 +74,7 @@
       var sound =document.createElement('audio');
       sound.id = 'audio-player'; 
       sound.controls = 'controls'; 
-      sound.src = childData.email;
+      sound.src = childData.URL;
       sound.type = 'audio/mpeg'; 
       document.getElementById('song').appendChild(sound);
       //var line =document.createElement('br');
