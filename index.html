@@ -18,9 +18,11 @@
 
 
 
- <div class="audio-player" id="song"></div>
+ <div class="song" id="song"></div>
  <center>
    <a href="Upload_Song.html" onclick="window.open('Upload_Song.html','_self');">Click here to upload</a>
+   <p id="playing"></p>
+   <audio id="sing" controls autoplay></audio>
  </center>
 </body>
 </html>
@@ -54,36 +56,37 @@
   // Get a reference to the database service
   const database = getDatabase(app);
 
-  // write data
-
   // read data
     const dbRef = ref(database, 'songs_list/');
     onValue(dbRef, (snapshot) => {
       snapshot.forEach((childSnapshot) => {
       const childKey = childSnapshot.key;
       const childData = childSnapshot.val();
-      // ...
+
       var song_name = document.createElement('p');
       var movie_name = document.createElement('p');
       var song_text = document.createTextNode(childData.SongName);
       var movie_text = document.createTextNode(childData.MovieName);
+      var URL_text = childData.URL
       song_name.appendChild(song_text);
       movie_name.appendChild(movie_text);
+      song_name.id=song_text;
+      
       document.getElementById('song').appendChild(song_name);
       document.getElementById('song').appendChild(movie_name);
-      var sound =document.createElement('audio');
-      sound.id = 'audio-player'; 
-      sound.controls = 'controls'; 
-      sound.src = childData.URL;
-      sound.type = 'audio/mpeg'; 
-      document.getElementById('song').appendChild(sound);
+      
       //var line =document.createElement('br');
       //document.getElementById('song').appendChild(line);
+      song_name.addEventListener ("click",function (e){
+        document.getElementById("sing").src=childData.URL;
+        document.getElementById("playing").innerHTML=childData.SongName;
+
+      });
       
       });
     }, {
       
     });
-
+    
 
 </script>
