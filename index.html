@@ -12,14 +12,27 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+</style>
 </head>
 
 <body>
 
 
 
- <div class="song" id="song"></div>
+ 
+ 
  <center>
+  <table id="lister">
+  <tr>
+    <td>SL.No</td>
+    <td>Song Name</td>
+    <td>Movie Name</td>
+  </tr>
+</table>
    <a href="Upload_Song.html" onclick="window.open('Upload_Song.html','_self');">Click here to upload</a>
    <p id="playing"></p>
    <audio id="sing" controls autoplay></audio>
@@ -49,7 +62,7 @@
     messagingSenderId: "504853211033",
     appId: "1:504853211033:web:5fb37524912ebad58dd508"
   };
-
+  var c=1;
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   
@@ -63,26 +76,31 @@
       const childKey = childSnapshot.key;
       const childData = childSnapshot.val();
 
-      var song_name = document.createElement('p');
-      var movie_name = document.createElement('p');
+      var newrow=document.createElement('tr');
+      var song_name = document.createElement('td');
+      var movie_name = document.createElement('td');
       var song_text = document.createTextNode(childData.SongName);
       var movie_text = document.createTextNode(childData.MovieName);
-      var URL_text = childData.URL
       song_name.appendChild(song_text);
       movie_name.appendChild(movie_text);
       song_name.id=song_text;
       
-      document.getElementById('song').appendChild(song_name);
-      document.getElementById('song').appendChild(movie_name);
+      //document.getElementById('song').appendChild(song_name);
+      //document.getElementById('song').appendChild(movie_name);
       
-      //var line =document.createElement('br');
-      //document.getElementById('song').appendChild(line);
       song_name.addEventListener ("click",function (e){
         document.getElementById("sing").src=childData.URL;
         document.getElementById("playing").innerHTML=childData.SongName;
 
       });
-      
+      var sln = document.createElement('td');
+      var sln_text = document.createTextNode(c);
+      sln.appendChild(sln_text);
+      newrow.appendChild(sln);
+      newrow.appendChild(song_name);
+      newrow.appendChild(movie_name);
+      document.getElementById("lister").appendChild(newrow);
+      c=c+1;
       });
     }, {
       
