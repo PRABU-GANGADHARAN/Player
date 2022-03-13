@@ -13,10 +13,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+<style>
 * {
   box-sizing: border-box;
 }
-
+#inbar {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
 
 #lister {
   border-collapse: collapse;
@@ -37,8 +46,27 @@
 #lister tr.header, #lister tr:hover {
   background-color: #f1f1f1;
 }
-}
 </style>
+<script>
+  function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("inbar");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("lister");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
 </head>
 
 <body>
@@ -48,11 +76,12 @@
  
  
  <center>
-  <table id="lister">
+  <input type="text" id="inbar" onkeyup="myFunction()" placeholder="Search for songs.." title="Type in a song">
+  <table id="lister" class="tabler">
   <tr>
-    <td>SL.No</td>
-    <td>Song Name</td>
-    <td>Movie Name</td>
+    <th>SL.No</th>
+    <th>Song Name</th>
+    <th>Movie Name</th>
   </tr>
 </table>
    <a href="Upload_Song.html" onclick="window.open('Upload_Song.html','_self');">Click here to upload</a>
@@ -127,6 +156,8 @@
     }, {
       
     });
+
+  
     
 
 </script>
